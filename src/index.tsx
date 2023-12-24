@@ -8,10 +8,9 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 const queryClient = new QueryClient({
-  // Set the global cache time to 10 minutes (600,000 milliseconds)
   defaultOptions: {
     queries: {
-      staleTime: 300000, // Set the stale time to 5 minutes (300,000 milliseconds)
+      staleTime: 300000, // Set the stale time to 5 minutes
     },
   },
 });

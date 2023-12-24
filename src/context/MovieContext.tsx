@@ -1,13 +1,6 @@
-import React, {
-  createContext,
-  useContext,
-  ReactNode,
-  FC,
- 
-} from "react";
+import React, { createContext, useContext, ReactNode, FC } from "react";
 import { useFetchMovies } from "../hooks/useFetchMovies";
 import { MoviesContextType } from "../types/movie-context";
-import { Movie, MovieListResponse } from "../types/movie";
 
 export const MoviesContext = createContext<MoviesContextType | undefined>(
   undefined
@@ -35,11 +28,10 @@ export const MoviesProvider: FC<MoviesProviderProps> = ({ children }) => {
     hasNextPage,
   } = useFetchMovies();
 
- 
   const contextValue = {
     movies: data[0]?.results || null,
     error,
-    status: status as "error" | "loading" | "success" | "pending", // Ensure the correct type
+    status: status as "error" | "loading" | "success" | "pending",
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,

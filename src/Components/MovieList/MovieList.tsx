@@ -6,6 +6,7 @@ import { useFetchMovies } from "../../hooks/useFetchMovies";
 import SearchBox from "../SearchBar/SearchBar";
 import { useDebounce } from "../../hooks/useDebounce";
 import MovieCard from "../MovieCard/MovieCard";
+import Loader from "../Loader/Loader";
 
 const MoviesList = () => {
   const { ref, inView } = useInView();
@@ -48,9 +49,7 @@ const MoviesList = () => {
                 ))
               ) || []}
         </ul>
-        <div className="text-white">
-          {(isFetching || isFetchingNextPage) && "Fetching..."}
-        </div>
+        <div>{(isFetching || isFetchingNextPage) && <Loader />}</div>
       </div>
     </div>
   );
