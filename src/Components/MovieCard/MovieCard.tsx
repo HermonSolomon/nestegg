@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Movie } from "../../types/movie";
-import { useMoviesContext } from "../../context/MovieContext";
 
 interface MovieCardProps {
   movie: Movie;
@@ -12,7 +11,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, innerRef }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    // Check if the movie is in the favorites and set the initial state
     const storedFavorites = localStorage.getItem("favorites");
     if (storedFavorites) {
       const favorites = JSON.parse(storedFavorites);
@@ -24,7 +22,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, innerRef }) => {
   }, [movie.id]);
 
   const handleAddToFavorites = () => {
-    // Get favorites from localStorage or initialize as an empty array
     const favoritesString = localStorage.getItem("favorites") || "[]";
     const favorites = JSON.parse(favoritesString);
 
@@ -36,8 +33,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, innerRef }) => {
     favorites.push({
       id: movie.id,
       title: movie.title,
-      image: movie.poster_path, // Use the correct property for the image path
+      image: movie.poster_path,
+      genre_ids: movie.genre_ids.flat(),
     });
+
     localStorage.setItem("favorites", JSON.stringify(favorites));
 
     setIsFavorite(true);
