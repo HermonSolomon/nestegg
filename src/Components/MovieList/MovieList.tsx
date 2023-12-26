@@ -1,5 +1,4 @@
 import { useInView } from "react-intersection-observer";
-import { useMoviesContext } from "../../context/MovieContext";
 import { Movie } from "../../types/movie";
 import { useEffect, useState } from "react";
 import { useFetchMovies } from "../../hooks/useFetchMovies";
@@ -13,7 +12,6 @@ const MoviesList = () => {
   const { hasNextPage, fetchNextPage, isFetchingNextPage, isFetching, data } =
     useFetchMovies();
 
-  const { movies } = useMoviesContext();
   const [search, setSearch] = useState<string>("");
   const debouncedSearch = useDebounce(search);
 
@@ -23,12 +21,13 @@ const MoviesList = () => {
     }
   }, [inView, hasNextPage, fetchNextPage, debouncedSearch]);
 
-  const filteredMovies =
-    movies?.filter((movie: Movie) =>
+  const filteredMovies = data?.flatMap((page: any) =>
+    page.results.filter((movie: Movie) =>
       movie.title.toLowerCase().includes(debouncedSearch.toLowerCase())
-    ) || [];
+    )
+  );
 
-  const filteredContent = filteredMovies.map((movie: Movie, index: number) => (
+  const filteredContent = filteredMovies?.map((movie: Movie, index: number) => (
     <MovieCard
       key={movie.id}
       movie={movie}
@@ -47,7 +46,7 @@ const MoviesList = () => {
                 page.results.map((movie: Movie) => (
                   <MovieCard key={movie.id} movie={movie} innerRef={ref} />
                 ))
-              ) || []}
+              )}
         </ul>
         <div>{(isFetching || isFetchingNextPage) && <Loader />}</div>
       </div>

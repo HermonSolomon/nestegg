@@ -3,14 +3,27 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 const API_BASE_URL = "https://api.themoviedb.org/3/discover/movie";
 const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
-const fetchMovies = async ({ pageParam }: { pageParam: number }) => {
-  const res = await fetch(
-    `${API_BASE_URL}?page=${pageParam}&api_key=${TMDB_API_KEY}`
-  );
+// Update fetchMovies function to accept a search query
+const fetchMovies = async ({
+  pageParam,
+  searchQuery,
+}: {
+  pageParam: number;
+  searchQuery?: string;
+}) => {
+  // Include the search query in the API request if it's provided
+  const apiUrl = searchQuery
+    ? `${API_BASE_URL}?page=${pageParam}&api_key=${TMDB_API_KEY}&query=${searchQuery}`
+    : `${API_BASE_URL}?page=${pageParam}&api_key=${TMDB_API_KEY}`;
+
+  const res = await fetch(apiUrl);
   return res.json();
 };
 
-export const useFetchMovies = (): {
+// Update useFetchMovies hook to accept a search query parameter
+export const useFetchMovies = (
+  searchQuery?: string
+): {
   data: any;
   status: string;
   error: Error | null;
@@ -28,8 +41,9 @@ export const useFetchMovies = (): {
     hasNextPage,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ["movies"],
-    queryFn: fetchMovies,
+    // Include the search query in the queryKey
+    queryKey: ["movies", { searchQuery }],
+    queryFn: ({ pageParam }) => fetchMovies({ pageParam, searchQuery }),
     initialPageParam: 1,
 
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
