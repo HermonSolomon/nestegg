@@ -10,6 +10,7 @@ import Home from "./Pages/Home/Home";
 import RootLayout from "./Pages/RootLayout/RootLayout";
 import { MoviesProvider } from "./context/MovieContext";
 import MovieDetails from "./Components/MovieDetails/MovieDetails";
+import Favorites from "./Pages/Favorites/Favorites";
 
 function App() {
   const route = createBrowserRouter(
@@ -17,7 +18,7 @@ function App() {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />}></Route>
         <Route path={"/movies/:id"} element={<MovieDetails />}></Route>
-        {/* <Route path="/cart" element={<Cart />}></Route> */}
+        <Route path="/favorites" element={<Favorites />}></Route>
       </Route>
     )
   );
