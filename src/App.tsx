@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import RootLayout from "./Pages/RootLayout/RootLayout";
-import { MoviesProvider } from "./context/MovieContext";
+import { MediaProvider } from "./context/MediaContext";
 import MovieDetails from "./Pages/MovieDetails/MovieDetails";
 import Favorites from "./Pages/Favorites/Favorites";
 
@@ -24,9 +24,9 @@ function App() {
   );
   return (
     <div className="App">
-      <MoviesProvider>
+      <MediaProvider>
         <RouterProvider router={route} />
-      </MoviesProvider>
+      </MediaProvider>
     </div>
   );
 }

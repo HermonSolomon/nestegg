@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFetchGenre } from "../../hooks/useFetchGenre";
-import { useMoviesContext } from "../../context/MovieContext";
-import { Link } from "react-router-dom";
+import { useMediaContext } from "../../context/MediaContext";
 
 interface MovieCardProps {
   id: number;
@@ -17,7 +16,7 @@ const Favorites = () => {
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
 
   const { data } = useFetchGenre();
-  const { theme, mediaType } = useMoviesContext();
+  const { theme, mediaType } = useMediaContext();
 
   const genreNames = Array.isArray(data) ? data : [];
 

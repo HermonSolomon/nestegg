@@ -7,23 +7,23 @@ import React, {
 } from "react";
 import { MediaContextType } from "../types/media-context";
 
-export const MoviesContext = createContext<MediaContextType | undefined>(
+export const MediaContext = createContext<MediaContextType | undefined>(
   undefined
 );
 
-export const useMoviesContext = (): MediaContextType => {
-  const context = useContext(MoviesContext);
+export const useMediaContext = (): MediaContextType => {
+  const context = useContext(MediaContext);
   if (!context) {
-    throw new Error("useMoviesContext must be used within a MoviesProvider");
+    throw new Error("useMediaContext must be used within a MoviesProvider");
   }
   return context;
 };
 
-interface MoviesProviderProps {
+interface MediaProviderProps {
   children: ReactNode;
 }
 
-export const MoviesProvider: FC<MoviesProviderProps> = ({ children }) => {
+export const MediaProvider: FC<MediaProviderProps> = ({ children }) => {
   const [mediaType, setMediaType] = useState<"movie" | "tv">("tv");
   const [theme, setTheme] = useState<"light" | "dark">("dark");
 
@@ -39,8 +39,8 @@ export const MoviesProvider: FC<MoviesProviderProps> = ({ children }) => {
   };
 
   return (
-    <MoviesContext.Provider value={contextValue}>
+    <MediaContext.Provider value={contextValue}>
       {children}
-    </MoviesContext.Provider>
+    </MediaContext.Provider>
   );
 };

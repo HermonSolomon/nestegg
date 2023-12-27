@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Media } from "../../types/media";
-import { useMoviesContext } from "../../context/MovieContext";
+import { useMediaContext } from "../../context/MediaContext";
 
 interface MovieCardProps {
   media: Media;
@@ -15,7 +15,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
   mediaType,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const { theme } = useMoviesContext();
+  const { theme } = useMediaContext();
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");

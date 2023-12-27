@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import Loader from "../../Components/Loader/Loader";
 import { useFetchSingleMedia } from "../../hooks/useFetchSingleMedia";
-import { useMoviesContext } from "../../context/MovieContext";
+import { useMediaContext } from "../../context/MediaContext";
 
 const MovieDetails = () => {
   const { id, mediaType } = useParams();
-  const { theme } = useMoviesContext();
+  const { theme } = useMediaContext();
 
   const defaultMediaType = mediaType || "movie";
 

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useMoviesContext } from "../../context/MovieContext";
+import { useMediaContext } from "../../context/MediaContext";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const { toggleTheme, theme } = useMoviesContext();
+  const { toggleTheme, theme } = useMediaContext();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);

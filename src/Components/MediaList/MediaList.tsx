@@ -4,14 +4,13 @@ import { useEffect, useState } from "react";
 import { useFetchMedia } from "../../hooks/useFetchMedia";
 import SearchBox from "../SearchBar/SearchBar";
 import { useDebounce } from "../../hooks/useDebounce";
-import MovieCard from "../MovieCard/MovieCard";
+import MovieCard from "../MediaCard/MediaCard";
 import Loader from "../Loader/Loader";
-import { useMoviesContext } from "../../context/MovieContext";
+import { useMediaContext } from "../../context/MediaContext";
 
-const MoviesList = () => {
+const MediaList = () => {
   const { ref, inView } = useInView();
-  //   const [mediaType, setMediaType] = useState<"movie" | "tv">("movie");
-  const { theme, mediaType, setMediaType } = useMoviesContext();
+  const { theme, mediaType, setMediaType } = useMediaContext();
 
   const { hasNextPage, fetchNextPage, isFetchingNextPage, isFetching, data } =
     useFetchMedia(mediaType as "movie" | "tv");
@@ -63,7 +62,7 @@ const MoviesList = () => {
             onChange={(e) => setMediaType(e.target.value as "movie" | "tv")}
             className="p-2 border rounded-md text-black sm:w-auto md:w-auto lg:w-auto xl:w-auto w-full"
           >
-            <option value="movie">Movies</option>
+            <option value="movie">Media</option>
             <option value="tv">TV Shows</option>
           </select>
         </div>
@@ -87,4 +86,4 @@ const MoviesList = () => {
   );
 };
 
-export default MoviesList;
+export default MediaList;
