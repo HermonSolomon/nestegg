@@ -40,6 +40,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
     favorites.push({
       id: media.id,
       title: media.title,
+      name: media.name,
       image: media.poster_path,
       genre_ids: media.genre_ids ? media.genre_ids.flat() : [],
     });

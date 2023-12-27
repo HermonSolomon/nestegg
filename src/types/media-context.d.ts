@@ -5,4 +5,5 @@ export type MediaContextType = {
   status: "error" | "loading" | "success" | "pending";
   theme: "light" | "dark";
   toggleTheme: () => void;
+  mediaType: string;
 };

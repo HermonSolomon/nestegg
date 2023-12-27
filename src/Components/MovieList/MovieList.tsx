@@ -61,7 +61,7 @@ const MoviesList = () => {
           <select
             value={mediaType}
             onChange={(e) => setMediaType(e.target.value as "movie" | "tv")}
-            className="p-2 border rounded-md text-black"
+            className="p-2 border rounded-md text-black sm:w-auto md:w-auto lg:w-auto xl:w-auto w-full"
           >
             <option value="movie">Movies</option>
             <option value="tv">TV Shows</option>

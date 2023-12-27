@@ -25,7 +25,7 @@ interface MoviesProviderProps {
 }
 
 export const MoviesProvider: FC<MoviesProviderProps> = ({ children }) => {
-  const [mediaType, setMediaType] = useState<"movie" | "tv">("movie");
+  const [mediaType, setMediaType] = useState<"movie" | "tv">("tv");
   const [theme, setTheme] = useState<"light" | "dark">("dark"); // Add this line
 
   const toggleTheme = () => {
@@ -49,6 +49,7 @@ export const MoviesProvider: FC<MoviesProviderProps> = ({ children }) => {
     hasNextPage,
     theme,
     toggleTheme,
+    mediaType,
   };
 
   return (
