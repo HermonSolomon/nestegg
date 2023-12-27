@@ -1,6 +1,5 @@
-import React from "react";
 import { useParams } from "react-router-dom";
-import Loader from "../Loader/Loader";
+import Loader from "../../Components/Loader/Loader";
 import { useFetchSingleMedia } from "../../hooks/useFetchSingleMedia";
 import { useMoviesContext } from "../../context/MovieContext";
 

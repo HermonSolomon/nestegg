@@ -5,7 +5,6 @@ import React, {
   FC,
   useState,
 } from "react";
-import { useFetchMedia } from "../hooks/useFetchMedia";
 import { MediaContextType } from "../types/media-context";
 
 export const MoviesContext = createContext<MediaContextType | undefined>(
@@ -26,30 +25,17 @@ interface MoviesProviderProps {
 
 export const MoviesProvider: FC<MoviesProviderProps> = ({ children }) => {
   const [mediaType, setMediaType] = useState<"movie" | "tv">("tv");
-  const [theme, setTheme] = useState<"light" | "dark">("dark"); // Add this line
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
-  const {
-    data,
-    status,
-    error,
-    fetchNextPage,
-    isFetchingNextPage,
-    hasNextPage,
-  } = useFetchMedia(mediaType);
 
   const contextValue = {
-    movies: data[0]?.results || null,
-    error,
-    status: status as "error" | "loading" | "success" | "pending",
-    fetchNextPage,
-    isFetchingNextPage,
-    hasNextPage,
     theme,
     toggleTheme,
     mediaType,
+    setMediaType,
   };
 
   return (

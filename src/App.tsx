@@ -9,7 +9,7 @@ import {
 import Home from "./Pages/Home/Home";
 import RootLayout from "./Pages/RootLayout/RootLayout";
 import { MoviesProvider } from "./context/MovieContext";
-import MovieDetails from "./Components/MovieDetails/MovieDetails";
+import MovieDetails from "./Pages/MovieDetails/MovieDetails";
 import Favorites from "./Pages/Favorites/Favorites";
 
 function App() {

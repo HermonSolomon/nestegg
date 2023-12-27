@@ -10,11 +10,11 @@ import { useMoviesContext } from "../../context/MovieContext";
 
 const MoviesList = () => {
   const { ref, inView } = useInView();
-  const [mediaType, setMediaType] = useState<"movie" | "tv">("movie");
-  const { hasNextPage, fetchNextPage, isFetchingNextPage, isFetching, data } =
-    useFetchMedia(mediaType);
+  //   const [mediaType, setMediaType] = useState<"movie" | "tv">("movie");
+  const { theme, mediaType, setMediaType } = useMoviesContext();
 
-  const { theme } = useMoviesContext();
+  const { hasNextPage, fetchNextPage, isFetchingNextPage, isFetching, data } =
+    useFetchMedia(mediaType as "movie" | "tv");
 
   const [search, setSearch] = useState<string>("");
   const debouncedSearch = useDebounce(search);
