@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFetchGenre } from "../../hooks/useFetchGenre";
+import { useMoviesContext } from "../../context/MovieContext";
 
 interface MovieCardProps {
   id: number;
@@ -14,6 +15,7 @@ const Favorites = () => {
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
 
   const { data } = useFetchGenre();
+  const { theme } = useMoviesContext();
 
   const genreNames = Array.isArray(data) ? data : [];
 
@@ -61,7 +63,11 @@ const Favorites = () => {
     });
 
   return (
-    <div className="bg-gray-800 text-white">
+    <div
+      className={`bg-${theme === "light" ? "white" : "gray-800"} text-${
+        theme === "light" ? "black" : "white"
+      }`}
+    >
       <div className="flex justify-between items-center p-4">
         <div className="flex items-center">
           <label className="mr-2">Sort by:</label>

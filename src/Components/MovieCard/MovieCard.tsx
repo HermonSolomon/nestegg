@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Media } from "../../types/media";
+import { useMoviesContext } from "../../context/MovieContext";
 
 interface MovieCardProps {
   media: Media;
@@ -14,6 +15,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
   mediaType,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const { theme } = useMoviesContext();
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
@@ -47,7 +49,6 @@ const MovieCard: React.FC<MovieCardProps> = ({
     setIsFavorite(true);
   };
 
-  console.log(media);
   return (
     <div ref={innerRef}>
       <li className="group relative">
@@ -85,7 +86,9 @@ const MovieCard: React.FC<MovieCardProps> = ({
               </Link>
             </div>
             <h3
-              className="text-sm text-white"
+              className={`text-sm ${
+                theme !== "light" ? "text-white" : "text-gray-800"
+              }`}
               data-testid={`media-${media.id}`}
             >
               {mediaType === "movie" ? media.title : media.name}

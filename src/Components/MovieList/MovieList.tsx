@@ -6,12 +6,15 @@ import SearchBox from "../SearchBar/SearchBar";
 import { useDebounce } from "../../hooks/useDebounce";
 import MovieCard from "../MovieCard/MovieCard";
 import Loader from "../Loader/Loader";
+import { useMoviesContext } from "../../context/MovieContext";
 
 const MoviesList = () => {
   const { ref, inView } = useInView();
   const [mediaType, setMediaType] = useState<"movie" | "tv">("movie");
   const { hasNextPage, fetchNextPage, isFetchingNextPage, isFetching, data } =
     useFetchMedia(mediaType);
+
+  const { theme } = useMoviesContext();
 
   const [search, setSearch] = useState<string>("");
   const debouncedSearch = useDebounce(search);
@@ -46,14 +49,19 @@ const MoviesList = () => {
   ));
 
   return (
-    <div className="bg-gray-800 font-mono">
+    <div
+      className={`bg-${theme === "light" ? "white" : "gray-800"} ${
+        theme !== "light" ? "text-white" : "text-gray-800"
+      } font-mono p-4`}
+    >
       <div className="mx-auto max-w-2xl px-4 py-2 sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8">
         <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
           <SearchBox onChange={setSearch} />
+          <label className="mr-2">Filter by:</label>
           <select
             value={mediaType}
             onChange={(e) => setMediaType(e.target.value as "movie" | "tv")}
-            className="p-2 border rounded-md"
+            className="p-2 border rounded-md text-black"
           >
             <option value="movie">Movies</option>
             <option value="tv">TV Shows</option>
