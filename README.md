@@ -1,46 +1,82 @@
-# Getting Started with Create React App
+# NestEgg
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This React TypeScript application functions as a streamlined movie website, seamlessly fetching an extensive list of movies and TV shows from a TMDB API endpoint and showcasing them on the site. Key functionalities such as filtering, sorting, and debounced searching enhance the user experience. To ensure efficient state management, the application leverages the React Context API and TanStack React Query, incorporating robust caching mechanisms. This choice not only provides global handling of asynchronous state but also enables users to add movies and TV shows to their favorites seamlessly, maintaining state coherence across page refreshes.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+1. [Installation](#installation)
+2. [Folder Structure](#folder-structure)
+3. [Component Architecture](#component-architecture)
+4. [State Management](#state-management)
+5. [Styling](#styling)
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To set up the project locally, follow these steps:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+# Clone the repository
+git clone https://github.com/HermonSolomon/nestegg.git
 
-### `npm test`
+# Navigate to the project directory
+cd nestegg
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Install dependencies
+npm install
+```
 
-### `npm run build`
+## Folder Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This app uses modular approach in organising the folder structure. The UI is split from the business logic for better readability and maintenance
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+src/
+|-- components/
+   |-- Header/
+       |--Header.tsx
+   |-- Home/
+       |--Home.tsx
+   |-- MediaCard/
+       |--MediaCard.tsx
+   |-- MediaDetails/
+       |--MediaDetails.tsx
+   |-- RootLayout/
+       |--RootLayout.tsx
+|-- context/
+    |-- MediaContext.ts
+|-- hooks/
+    |-- useDebounce.tsx
+    |-- useFetchGenre.ts
+    |-- useFetchMedia.ts
+    |-- useFetchSingleMedia.ts
+|-- pages/
+   |-- Favorites/
+       |--Favorites.tsx
+   |-- Home/
+       |--Home.tsx
+   |-- MediaDetails/
+       |--MediaDetails.tsx
+   |-- RootLayout/
+       |--RootLayout.tsx
+|-- types/
+    |-- media-context.d.ts
+    |-- media.d.ts
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
 
-### `npm run eject`
+## Component Architecture
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The movie website is built with the following components:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Header**: Displays the logo and navigation links.
+- **Movie/TV List**: Displays a list of movie or tv retrieved from the API.
+- **Movie Detail**: Displays details of a selected movie or tv.
+- **Favorites**: Displays items added to the Favorites.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## State Management
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The application efficiently manages state through the React Context API and React Query. Users can seamlessly integrate movies and TV shows into their favorites, with the application intelligently preserving state across page refreshes. It's important to highlight that, despite the potential suitability of React's built-in Context for this task given the project's size and complexity, the deliberate choice of React Query demonstrates a nuanced understanding of state management in the context of larger applications.
 
-## Learn More
+## Styling
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The styling of components is achieved through the Tailwind CSS framework, ensuring simplicity and user-friendly design. It embraces responsive principles, catering to optimal user experiences on both desktop and mobile screens.
