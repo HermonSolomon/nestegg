@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Movie } from "../../types/movie";
+import { Media } from "../../types/media";
 
 interface MovieCardProps {
-  movie: Movie;
+  media: Media;
   innerRef?: (node?: Element | null | undefined) => void;
+  mediaType: string;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, innerRef }) => {
+const MovieCard: React.FC<MovieCardProps> = ({
+  media,
+  innerRef,
+  mediaType,
+}) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
     if (storedFavorites) {
       const favorites = JSON.parse(storedFavorites);
-      const isMovieFavorite = favorites.some(
-        (favorite: Movie) => favorite.id === movie.id
+      const isMediaFavorite = favorites.some(
+        (favorite: Media) => favorite.id === media.id
       );
-      setIsFavorite(isMovieFavorite);
+      setIsFavorite(isMediaFavorite);
     }
-  }, [movie.id]);
+  }, [media.id]);
 
   const handleAddToFavorites = () => {
     const favoritesString = localStorage.getItem("favorites") || "[]";
@@ -31,10 +36,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, innerRef }) => {
     }
 
     favorites.push({
-      id: movie.id,
-      title: movie.title,
-      image: movie.poster_path,
-      genre_ids: movie.genre_ids.flat(),
+      id: media.id,
+      title: media.title,
+      image: media.poster_path,
+      genre_ids: media.genre_ids ? media.genre_ids.flat() : [],
     });
 
     localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -42,6 +47,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, innerRef }) => {
     setIsFavorite(true);
   };
 
+  console.log(media);
   return (
     <div ref={innerRef}>
       <li className="group relative">
@@ -69,10 +75,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, innerRef }) => {
                   </svg>
                 </button>
               </div>
-              <Link to={`/movies/${movie.id}`}>
+              <Link to={`/${mediaType}/${media.id}`}>
                 <img
-                  src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-                  alt="Movie Backdrop"
+                  src={`https://image.tmdb.org/t/p/w500${media.backdrop_path}`}
+                  alt={`${media.title} Backdrop`}
                   className="object-cover w-full h-full rounded-lg "
                   loading="lazy"
                 />
@@ -80,9 +86,9 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, innerRef }) => {
             </div>
             <h3
               className="text-sm text-white"
-              data-testid={`movie-${movie.id}`}
+              data-testid={`media-${media.id}`}
             >
-              <p>{movie.title}</p>
+              {mediaType === "movie" ? media.title : media.name}
             </h3>
           </div>
         </div>

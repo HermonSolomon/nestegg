@@ -1,12 +1,18 @@
-import React, { createContext, useContext, ReactNode, FC } from "react";
-import { useFetchMovies } from "../hooks/useFetchMovies";
-import { MoviesContextType } from "../types/movie-context";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  FC,
+  useState,
+} from "react";
+import { useFetchMedia } from "../hooks/useFetchMedia";
+import { MediaContextType } from "../types/media-context";
 
-export const MoviesContext = createContext<MoviesContextType | undefined>(
+export const MoviesContext = createContext<MediaContextType | undefined>(
   undefined
 );
 
-export const useMoviesContext = (): MoviesContextType => {
+export const useMoviesContext = (): MediaContextType => {
   const context = useContext(MoviesContext);
   if (!context) {
     throw new Error("useMoviesContext must be used within a MoviesProvider");
@@ -19,6 +25,7 @@ interface MoviesProviderProps {
 }
 
 export const MoviesProvider: FC<MoviesProviderProps> = ({ children }) => {
+  const [mediaType, setMediaType] = useState<"movie" | "tv">("movie");
   const {
     data,
     status,
@@ -26,7 +33,7 @@ export const MoviesProvider: FC<MoviesProviderProps> = ({ children }) => {
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
-  } = useFetchMovies();
+  } = useFetchMedia(mediaType);
 
   const contextValue = {
     movies: data[0]?.results || null,

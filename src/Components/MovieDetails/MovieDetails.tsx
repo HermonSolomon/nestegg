@@ -1,11 +1,16 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
-import { useFetchMovie } from "../../hooks/useFetchMovie";
+import { useFetchSingleMedia } from "../../hooks/useFetchSingleMedia";
 
 const MovieDetails = () => {
-  const { id } = useParams();
-  const { data, isError, isLoading } = useFetchMovie(Number(id));
+  const { id, mediaType } = useParams();
+  const defaultMediaType = mediaType || "movie";
+
+  const { data, isError, isLoading } = useFetchSingleMedia(
+    Number(id),
+    defaultMediaType
+  );
 
   if (isLoading) return <Loader />;
 
@@ -19,7 +24,7 @@ const MovieDetails = () => {
             {data?.backdrop_path && (
               <img
                 src={`https://image.tmdb.org/t/p/w500${data.backdrop_path}`}
-                alt="Movie Backdrop"
+                alt={`${mediaType === "movie" ? "Movie" : "TV Show"} Backdrop`}
                 className="object-cover w-full h-full rounded-lg"
                 loading="lazy"
               />
@@ -27,13 +32,12 @@ const MovieDetails = () => {
           </div>
 
           <div className="flex-col text-gray-300">
-            <p className="pt-4 text-2xl font-bold">
-              {data?.title && data.title}
-            </p>
+            <p className="pt-4 text-2xl font-bold">{data.title}</p>
             <hr className="hr-text" data-content="" />
             <div className="text-md flex justify-between px-4 my-2">
               <span className="font-bold">
-                2h 2min | Crime, Drama, Thriller
+                {data?.runtime ? `${data.runtime}min` : ""} |{" "}
+                {data?.genres?.map((genre: any) => genre.name).join(", ")}
               </span>
               <span className="font-bold"></span>
             </div>
@@ -42,9 +46,9 @@ const MovieDetails = () => {
             </p>
 
             <p className="flex text-md px-4 my-2">
-              Rating: 9.0/10
+              Rating: {data?.vote_average || "N/A"}/10
               <span className="font-bold px-2">|</span>
-              Mood: Dark
+              Mood: {data?.tagline || "N/A"}
             </p>
 
             <div className="text-xs">

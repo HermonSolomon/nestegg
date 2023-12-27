@@ -1,4 +1,4 @@
-export type Movie = {
+export type Media = {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -13,12 +13,14 @@ export type Movie = {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  media_type: "movie" | "tv";
+  name: string;
 };
 
-export type MovieListResponse = {
+export type MediaListResponse = {
   length: any;
   page: number;
-  results: Movie[] | null;
+  results: Media[] | null;
   total_pages: number;
   total_results: number;
 };

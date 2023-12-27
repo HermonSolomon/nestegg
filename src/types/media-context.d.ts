@@ -1,4 +1,4 @@
-export type MoviesContextType = {
+export type MediaContextType = {
   movies: Movie[] | null;
   // setMovies: (value: Movie[]) => void;
   error: Error | null;

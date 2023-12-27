@@ -16,9 +16,9 @@ function App() {
   const route = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
-        <Route index element={<Home />}></Route>
-        <Route path={"/movies/:id"} element={<MovieDetails />}></Route>
-        <Route path="/favorites" element={<Favorites />}></Route>
+        <Route index element={<Home />} />
+        <Route path="/:mediaType/:id" element={<MovieDetails />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Route>
     )
   );

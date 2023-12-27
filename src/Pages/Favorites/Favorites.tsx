@@ -5,7 +5,7 @@ interface MovieCardProps {
   id: number;
   title: string;
   image: string;
-  genre_ids: number[]; // Add this line
+  genre_ids: number[];
 }
 
 const Favorites = () => {
@@ -24,7 +24,7 @@ const Favorites = () => {
       const storedFavorites = JSON.parse(storedFavoritesString).map(
         (favorite: MovieCardProps) => ({
           ...favorite,
-          genre_ids: favorite.genre_ids.flat(), // Flatten the genre IDs
+          genre_ids: favorite.genre_ids.flat(),
         })
       );
 
@@ -53,7 +53,7 @@ const Favorites = () => {
     )
     .sort((a, b) => {
       if (sortBy === "title") {
-        return a.title.localeCompare(b.title);
+        return (a.title ?? "").localeCompare(b.title ?? "");
       } else if (sortBy === "genre") {
         return a.genre_ids && b.genre_ids ? a.genre_ids[0] - b.genre_ids[0] : 0;
       }
@@ -96,7 +96,6 @@ const Favorites = () => {
         </div>
       </div>
 
-      {/* Favorites List */}
       {sortedAndFilteredFavorites.length === 0 && (
         <div className="h-screen flex items-center justify-center">
           <p className="text-center">

@@ -1,28 +1,39 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-const API_BASE_URL = "https://api.themoviedb.org/3/discover/movie";
+const API_BASE_URL = "https://api.themoviedb.org/3/discover";
 const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
-// Update fetchMovies function to accept a search query
-const fetchMovies = async ({
+const fetchMedia = async ({
   pageParam,
   searchQuery,
+  category,
+  mediaType,
 }: {
   pageParam: number;
   searchQuery?: string;
+  category?: string;
+  mediaType: "movie" | "tv";
 }) => {
-  // Include the search query in the API request if it's provided
-  const apiUrl = searchQuery
-    ? `${API_BASE_URL}?page=${pageParam}&api_key=${TMDB_API_KEY}&query=${searchQuery}`
-    : `${API_BASE_URL}?page=${pageParam}&api_key=${TMDB_API_KEY}`;
+  let apiUrl = `${API_BASE_URL}/${mediaType}`;
+
+  if (searchQuery) {
+    apiUrl += `?page=${pageParam}&api_key=${TMDB_API_KEY}&query=${searchQuery}`;
+  } else {
+    apiUrl += `?page=${pageParam}&api_key=${TMDB_API_KEY}`;
+  }
+
+  if (category) {
+    apiUrl += `&with_genres=${category}`;
+  }
 
   const res = await fetch(apiUrl);
   return res.json();
 };
 
-// Update useFetchMovies hook to accept a search query parameter
-export const useFetchMovies = (
-  searchQuery?: string
+export const useFetchMedia = (
+  mediaType: "movie" | "tv",
+  searchQuery?: string,
+  category?: string
 ): {
   data: any;
   status: string;
@@ -41,18 +52,16 @@ export const useFetchMovies = (
     hasNextPage,
     isFetching,
   } = useInfiniteQuery({
-    // Include the search query in the queryKey
-    queryKey: ["movies", { searchQuery }],
-    queryFn: ({ pageParam }) => fetchMovies({ pageParam, searchQuery }),
+    queryKey: [mediaType, { searchQuery, category }],
+    queryFn: ({ pageParam }) =>
+      fetchMedia({ pageParam, searchQuery, category, mediaType }),
     initialPageParam: 1,
-
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (lastPage.length === 0) {
         return undefined;
       }
       return lastPageParam + 1;
     },
-    // Set the stale time to 5 minutes (300,000 milliseconds)
     staleTime: 300000,
   });
 
