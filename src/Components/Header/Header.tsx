@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <nav
       className={`font-mono bg-${
-        theme === "light" ? "white" : "gray-900"
+        theme === "light" ? "white" : "gray-800"
       } text-${theme === "light" ? "gray-800" : "white"} ${
         theme === "light" ? "border-grey-300 border-2" : ""
       }`}
@@ -63,7 +63,7 @@ const Header = () => {
               <button
                 onClick={toggleMobileMenu}
                 className={`bg-${
-                  theme === "light" ? "white" : "gray-900"
+                  theme === "light" ? "white" : "gray-800"
                 }text-black focus:outline-none`}
                 name="humburger"
                 role="button"

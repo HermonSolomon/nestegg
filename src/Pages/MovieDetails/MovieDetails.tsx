@@ -21,7 +21,7 @@ const MovieDetails = () => {
   return (
     <div
       className={`min-h-screen grid place-items-center font-mono bg-${
-        theme === "light" ? "white" : "gray-900"
+        theme === "light" ? "white" : "gray-800"
       } `}
     >
       <div
